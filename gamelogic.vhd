@@ -19,7 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use ieee.std_logic_unsigned.all;
+use ieee.std_logic_unsigned.all; -- addition
 
 
 -- Uncomment the following library declaration if using
@@ -32,17 +32,47 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity gamelogic is
-    Port (p00, p01, p02, p03, p04, p05, p06,
+    Port (
+    p00, p01, p02, p03, p04, p05, p06,
     p07, p08, p09, p10, p11, p12, p13: in std_logic_vector (7 downto 0);
+    playerSelection: in std_logic_vector (3 downto 0);
+
     p00next, p01next, p02next, p03next, p04next, p05next, p06next, p07next,
-       p08next, p09next, p10next, p11next, p12next, p13next : out std_logic_vector (7 downto 0);
-       playerSelection: in std_logic_vector (3 downto 0));
+       p08next, p09next, p10next, p11next, p12next, p13next : out std_logic_vector (7 downto 0));
+    
 end gamelogic;
 
 architecture Behavioral of gamelogic is
 
 signal currentvalue: std_logic_vector (7 downto 0);
 signal finalstep: std_logic_vector (7 downto 0);
+signal modulo: std_logic_vector (3 downto 0);
+signal division: std_logic;
+
+COMPONENT moduloCalculator
+	PORT(
+		finalstep : IN std_logic_vector(7 downto 0);          
+		modulo : OUT std_logic_vector(3 downto 0);
+		division : OUT std_logic
+		);
+END COMPONENT;
+
+function holeCheck (playerSelection: std_logic_vector (3 downto 0);
+                    currentHole: std_logic_vector (3 downto 0);
+                    modulo: std_logic_vector (3 downto 0);
+                    division: std_logic) return std_logic is 
+begin
+    if division = '0' then    -- from playerselect to modulo
+        if ((currentHole > playerSelection) and (currenthole < modulo)) then 
+            return '1';
+        end if;
+    elsif division = '1' then -- from 0 to modulo and playerselect to 13
+        if ((currentHole > playerSelection) or (currenthole < modulo)) then 
+            return '1';
+        end if;
+    end if;
+return '0';
+end holeCheck;
 
 begin
     process begin
@@ -65,13 +95,31 @@ begin
     end case;
     end process;
 
-    finalstep <= currentvalue + playerSelection;
+    finalstep <= (currentvalue + playerSelection);
 
-    process begin
-        if (holeCheck(p00, playerSelection, modulo, divison))
-        p00next <= p00 + 1;
-        else 
-     end if;
+    getfinalhole: moduloCalculator PORT MAP(
+		finalstep => finalstep,
+		modulo => modulo,
+		division => division
+	);
+
+    p00next <= p00 + holeCheck(playerSelection, x"0", modulo, division);
+    p01next <= p01 + holeCheck(playerSelection, x"1", modulo, division);
+    p02next <= p02 + holeCheck(playerSelection, x"2", modulo, division);
+    p03next <= p03 + holeCheck(playerSelection, x"3", modulo, division);
+    p04next <= p04 + holeCheck(playerSelection, x"4", modulo, division);
+    p05next <= p05 + holeCheck(playerSelection, x"5", modulo, division);
+
+    p06next <= p06 + holeCheck(playerSelection, x"6", modulo, division);
+
+    p07next <= p07 + holeCheck(playerSelection, x"7", modulo, division);
+    p08next <= p08 + holeCheck(playerSelection, x"8", modulo, division);
+    p09next <= p09 + holeCheck(playerSelection, x"9", modulo, division);
+    p10next <= p10 + holeCheck(playerSelection, x"A", modulo, division);
+    p11next <= p11 + holeCheck(playerSelection, x"B", modulo, division);
+    p12next <= p12 + holeCheck(playerSelection, x"C", modulo, division);
+    
+    p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division);
 
 end Behavioral;
 
