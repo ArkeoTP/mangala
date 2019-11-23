@@ -44,7 +44,10 @@ entity DisplayModule is
 		p10 : IN std_logic_vector(7 downto 0);
 		p11 : IN std_logic_vector(7 downto 0);
 		p12 : IN std_logic_vector(7 downto 0);
-        p13 : IN std_logic_vector(7 downto 0);
+		p13 : IN std_logic_vector(7 downto 0);
+		boardSwitch: in std_logic;
+		SevSegBus: out std_logic_vector (7 downto 0);
+		SevSegControl: out std_logic_vector (7 downto 0);
         
         clk: in std_logic
         );
@@ -68,9 +71,46 @@ architecture Behavioral of DisplayModule is
 		);
 	END COMPONENT;
 
+	signal A, B, C, D, E, F, G, H: std_logic_vector (3 downto 0) := x"0";
+
 begin
 
+	process begin 
+	if boardswitch = '0' then
+		A <= p06(3 downto 0);
+		B <= x"a"; -- placeholder
+		C <= p05(3 downto 0);
+		D <= p04(3 downto 0);
+		E <= p03(3 downto 0);
+		F <= p02(3 downto 0);
+		G <= p01(3 downto 0);
+		H <= p00(3 downto 0);
+	else 
+		A <= p07(3 downto 0);
+		B <= p08(3 downto 0);
+		C <= p09(3 downto 0);
+		D <= p10(3 downto 0);
+		E <= p11(3 downto 0);
+		F <= p12(3 downto 0);
+		G <= x"a"; -- placeholder
+		H <= p13(3 downto 0);
+	end if;
+	end process;
 
 
+	inst_display: sevenSegment port map (
+		A => A,
+		B => B,
+		C => C,
+		D => D,
+		E => E,
+		F => F,
+		G => G,
+		H => H,
+		clk => clk,
+		SevenSegControl => SevSegControl,
+		SevenSegBus => SevSegBus
+	);
+	
 end Behavioral;
 

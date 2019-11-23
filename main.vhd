@@ -33,8 +33,11 @@ entity main is
     Port ( 
         turnClock: in std_logic;
         resetButton: in std_logic;
-        playerSelection: in std_logic_vector (3 downto 0)
-        -- boardSwitch: in std_logic
+        playerSelection: in std_logic_vector (3 downto 0);
+		boardSwitch: in std_logic;
+		SevSegBus: out std_logic_vector (7 downto 0);
+		SevSegControl: out std_logic_vector (7 downto 0);
+		mclk: in std_logic -- master clock
 		
     );
 end main;
@@ -99,6 +102,9 @@ COMPONENT DisplayModule
 		p11 : IN std_logic_vector(7 downto 0);
 		p12 : IN std_logic_vector(7 downto 0);
 		p13 : IN std_logic_vector(7 downto 0);
+		boardSwitch: in std_logic;
+		SevSegBus: out std_logic_vector (7 downto 0);
+		SevSegControl: out std_logic_vector (7 downto 0);
 		clk : IN std_logic       
 		);
 	END COMPONENT;
@@ -288,7 +294,10 @@ Inst_DisplayModule: DisplayModule PORT MAP(
 		p11 => p11out,
 		p12 => p12out,
 		p13 => p13out,
-		clk => turnClock
+		boardSwitch => boardSwitch,
+		SevSegBus => SevSegBus,
+		SevSegControl => SevSegControl,
+		clk => mclk
 	);
 
 end Behavioral;

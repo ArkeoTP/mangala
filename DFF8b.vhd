@@ -45,7 +45,7 @@ architecture Behavioral of DFF8b is
 		);
     END COMPONENT;
 
-    signal temp: std_logic_vector (7 downto 0);
+    signal temp: std_logic_vector (7 downto 0) := x"04";
 
 begin
 

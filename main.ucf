@@ -1,0 +1,30 @@
+NET "SevSegControl[0]" LOC = P50;
+NET "SevSegControl[1]" LOC = P49;
+NET "SevSegControl[2]" LOC = P52;
+NET "SevSegControl[3]" LOC = P56;
+NET "SevSegControl[4]" LOC = P59;
+NET "SevSegControl[5]" LOC = P57;
+NET "SevSegControl[6]" LOC = P60;
+NET "SevSegControl[7]" LOC = P61;
+
+NET "SevSegBus[7]" LOC = P71;
+NET "SevSegBus[6]" LOC = P62;
+NET "SevSegBus[5]" LOC = P65;
+NET "SevSegBus[4]" LOC = P72;
+NET "SevSegBus[3]" LOC = P73;
+NET "SevSegBus[2]" LOC = P98;
+NET "SevSegBus[1]" LOC = P64;
+NET "SevSegBus[0]" LOC = P70;
+
+NET "mclk" LOC = P40;
+
+NET "playerSelection[0]" LOC = P15;
+NET "playerSelection[1]" LOC = P12;
+NET "playerSelection[2]" LOC = P5;
+NET "playerSelection[3]" LOC = P4;
+
+NET "resetButton" LOC = P34;
+NET "turnClock" LOC = P35;
+NET "boardSwitch" LOC = P78;
+
+NET "turnClock" CLOCK_DEDICATED_ROUTE = FALSE;
