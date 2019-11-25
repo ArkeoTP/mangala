@@ -68,7 +68,8 @@ COMPONENT gamelogic
 		p11 : IN std_logic_vector(7 downto 0);
 		p12 : IN std_logic_vector(7 downto 0);
 		p13 : IN std_logic_vector(7 downto 0);
-		playerSelection : IN std_logic_vector(3 downto 0);          
+		playerSelection : IN std_logic_vector(3 downto 0); 
+		resetButton : IN std_logic;         
 		p00next : OUT std_logic_vector(7 downto 0);
 		p01next : OUT std_logic_vector(7 downto 0);
 		p02next : OUT std_logic_vector(7 downto 0);
@@ -269,7 +270,8 @@ Inst_gamelogic: gamelogic PORT MAP(
 		p11next => p11next,
 		p12next => p12next,
 		p13next => p13next,
-		playerSelection => playerSelection
+		playerSelection => playerSelection,
+		resetButton => resetButton
     );
     
 Update: Process(turnClock)

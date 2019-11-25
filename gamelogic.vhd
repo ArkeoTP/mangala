@@ -36,6 +36,7 @@ entity gamelogic is
     p00, p01, p02, p03, p04, p05, p06,
     p07, p08, p09, p10, p11, p12, p13: in std_logic_vector (7 downto 0);
     playerSelection: in std_logic_vector (3 downto 0);
+    resetButton: in std_logic;
 
     p00next, p01next, p02next, p03next, p04next, p05next, p06next, p07next,
        p08next, p09next, p10next, p11next, p12next, p13next : out std_logic_vector (7 downto 0));
@@ -102,7 +103,26 @@ begin
 		modulo => modulo,
 		division => division
 	);
+    process begin
+        if resetButton = '1' then -- fix later
+            p00next <= x"04";
+            p01next <= x"04";
+            p02next <= x"04";
+            p03next <= x"04";
+            p04next <= x"04";
+            p05next <= x"04";
 
+            p06next <= x"00";
+
+            p07next <= x"04";
+            p08next <= x"04";
+            p09next <= x"04";
+            p10next <= x"04";
+            p11next <= x"04";
+            p12next <= x"04";
+
+            p13next <= x"00";            
+        else
     p00next <= p00 + holeCheck(playerSelection, x"0", modulo, division);
     p01next <= p01 + holeCheck(playerSelection, x"1", modulo, division);
     p02next <= p02 + holeCheck(playerSelection, x"2", modulo, division);
@@ -120,6 +140,8 @@ begin
     p12next <= p12 + holeCheck(playerSelection, x"C", modulo, division);
     
     p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division);
+        end if;
+    end process;
 
 end Behavioral;
 

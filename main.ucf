@@ -28,3 +28,4 @@ NET "turnClock" LOC = P35;
 NET "boardSwitch" LOC = P78;
 
 NET "turnClock" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "resetButton" CLOCK_DEDICATED_ROUTE = FALSE;
