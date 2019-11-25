@@ -40,7 +40,6 @@ entity specialCondition is
 end specialCondition;
 
 architecture Behavioral of moduloCalculator is
-signal oppositeHole: STD_LOGIC_VECTOR (3 downto 0)
 
 begin
   process  begin

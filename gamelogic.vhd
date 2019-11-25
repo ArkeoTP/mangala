@@ -50,6 +50,9 @@ signal finalstep: std_logic_vector (7 downto 0);
 signal modulo: std_logic_vector (3 downto 0);
 signal division: std_logic;
 
+signal p00temp, p01temp, p02temp, p03temp, p04temp, p05temp, p07temp,
+p08temp, p09temp, p10temp, p11temp, p12temp : std_logic_vector (7 downto 0);
+
 COMPONENT moduloCalculator
 	PORT(
 		finalstep : IN std_logic_vector(7 downto 0);          
@@ -58,17 +61,48 @@ COMPONENT moduloCalculator
 		);
 END COMPONENT;
 
+COMPONENT zeroRule
+	PORT(
+		p00temp : IN std_logic_vector(7 downto 0);
+		p01temp : IN std_logic_vector(7 downto 0);
+		p02temp : IN std_logic_vector(7 downto 0);
+		p03temp : IN std_logic_vector(7 downto 0);
+		p04temp : IN std_logic_vector(7 downto 0);
+		p05temp : IN std_logic_vector(7 downto 0);
+		p07temp : IN std_logic_vector(7 downto 0);
+		p08temp : IN std_logic_vector(7 downto 0);
+		p09temp : IN std_logic_vector(7 downto 0);
+		p10temp : IN std_logic_vector(7 downto 0);
+		p11temp : IN std_logic_vector(7 downto 0);
+		p12temp : IN std_logic_vector(7 downto 0);
+		playerSelection : IN std_logic_vector(3 downto 0);          
+		p00out : OUT std_logic_vector(7 downto 0);
+		p01out : OUT std_logic_vector(7 downto 0);
+		p02out : OUT std_logic_vector(7 downto 0);
+		p03out : OUT std_logic_vector(7 downto 0);
+		p04out : OUT std_logic_vector(7 downto 0);
+		p05out : OUT std_logic_vector(7 downto 0);
+		p07out : OUT std_logic_vector(7 downto 0);
+		p08out : OUT std_logic_vector(7 downto 0);
+		p09out : OUT std_logic_vector(7 downto 0);
+		p10out : OUT std_logic_vector(7 downto 0);
+		p11out : OUT std_logic_vector(7 downto 0);
+		p12out : OUT std_logic_vector(7 downto 0)
+		);
+	END COMPONENT;
+
+
 function holeCheck (playerSelection: std_logic_vector (3 downto 0);
                     currentHole: std_logic_vector (3 downto 0);
                     modulo: std_logic_vector (3 downto 0);
                     division: std_logic) return std_logic is 
 begin
     if division = '0' then    -- from playerselect to modulo
-        if ((currentHole > playerSelection) and (currenthole < modulo)) then 
+        if ((currentHole > playerSelection) and (currenthole <= modulo)) then 
             return '1';
         end if;
     elsif division = '1' then -- from 0 to modulo and playerselect to 13
-        if ((currentHole > playerSelection) or (currenthole < modulo)) then 
+        if ((currentHole > playerSelection) or (currenthole <= modulo)) then 
             return '1';
         end if;
     end if;
@@ -105,43 +139,71 @@ begin
 	);
     process begin
         if resetButton = '1' then -- fix later
-            p00next <= x"04";
-            p01next <= x"04";
-            p02next <= x"04";
-            p03next <= x"04";
-            p04next <= x"04";
-            p05next <= x"04";
+            p00temp <= x"04";
+            p01temp <= x"04";
+            p02temp <= x"04";
+            p03temp <= x"04";
+            p04temp <= x"04";
+            p05temp <= x"04";
 
             p06next <= x"00";
 
-            p07next <= x"04";
-            p08next <= x"04";
-            p09next <= x"04";
-            p10next <= x"04";
-            p11next <= x"04";
-            p12next <= x"04";
+            p07temp <= x"04";
+            p08temp <= x"04";
+            p09temp <= x"04";
+            p10temp <= x"04";
+            p11temp <= x"04";
+            p12temp <= x"04";
 
             p13next <= x"00";            
         else
-    p00next <= p00 + holeCheck(playerSelection, x"0", modulo, division);
-    p01next <= p01 + holeCheck(playerSelection, x"1", modulo, division);
-    p02next <= p02 + holeCheck(playerSelection, x"2", modulo, division);
-    p03next <= p03 + holeCheck(playerSelection, x"3", modulo, division);
-    p04next <= p04 + holeCheck(playerSelection, x"4", modulo, division);
-    p05next <= p05 + holeCheck(playerSelection, x"5", modulo, division);
+    p00temp <= p00 + holeCheck(playerSelection, x"0", modulo, division);
+    p01temp <= p01 + holeCheck(playerSelection, x"1", modulo, division);
+    p02temp <= p02 + holeCheck(playerSelection, x"2", modulo, division);
+    p03temp <= p03 + holeCheck(playerSelection, x"3", modulo, division);
+    p04temp <= p04 + holeCheck(playerSelection, x"4", modulo, division);
+    p05temp <= p05 + holeCheck(playerSelection, x"5", modulo, division);
 
     p06next <= p06 + holeCheck(playerSelection, x"6", modulo, division);
 
-    p07next <= p07 + holeCheck(playerSelection, x"7", modulo, division);
-    p08next <= p08 + holeCheck(playerSelection, x"8", modulo, division);
-    p09next <= p09 + holeCheck(playerSelection, x"9", modulo, division);
-    p10next <= p10 + holeCheck(playerSelection, x"A", modulo, division);
-    p11next <= p11 + holeCheck(playerSelection, x"B", modulo, division);
-    p12next <= p12 + holeCheck(playerSelection, x"C", modulo, division);
+    p07temp <= p07 + holeCheck(playerSelection, x"7", modulo, division);
+    p08temp <= p08 + holeCheck(playerSelection, x"8", modulo, division);
+    p09temp <= p09 + holeCheck(playerSelection, x"9", modulo, division);
+    p10temp <= p10 + holeCheck(playerSelection, x"A", modulo, division);
+    p11temp <= p11 + holeCheck(playerSelection, x"B", modulo, division);
+    p12temp <= p12 + holeCheck(playerSelection, x"C", modulo, division);
     
     p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division);
         end if;
     end process;
+
+    Inst_zeroRule: zeroRule PORT MAP(
+		p00temp => p00temp,
+		p01temp => p01temp,
+		p02temp => p02temp,
+		p03temp => p03temp,
+		p04temp => p04temp,
+		p05temp => p05temp,
+		p07temp => p07temp,
+		p08temp => p08temp,
+		p09temp => p09temp,
+		p10temp => p10temp,
+		p11temp => p11temp,
+		p12temp => p12temp,
+		p00out => p00next,
+		p01out => p01next,
+		p02out => p02next,
+		p03out => p03next,
+		p04out => p04next,
+		p05out => p05next,
+		p07out => p07next,
+		p08out => p08next,
+		p09out => p09next,
+		p10out => p10next,
+		p11out => p11next,
+		p12out => p12next,
+		playerSelection => playerSelection
+	);
 
 end Behavioral;
 
