@@ -22,7 +22,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
+use ieee.std_logic_unsigned.all; -- addition
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -33,31 +34,101 @@ entity zeroRule is
     generic (remaining : std_logic_vector (7 downto 0) := x"00");
     Port (
            p00temp, p01temp, p02temp, p03temp, p04temp, p05temp, p07temp,
-           p08temp, p09temp, p10temp, p11temp, p12temp : std_logic_vector (7 downto 0);
+           p08temp, p09temp, p10temp, p11temp, p12temp : in std_logic_vector (7 downto 0);
            p00out, p01out, p02out, p03out, p04out, p05out,
            p07out, p08out, p09out, p10out, p11out, p12out : out  STD_LOGIC_VECTOR (7 downto 0);
-           playerSelection : in  STD_LOGIC_VECTOR (3 downto 0));
+           p06incr, p13incr : out STD_LOGIC_VECTOR (7 downto 0);
+           playerSelection : in  STD_LOGIC_VECTOR (3 downto 0);
+           modulo : in STD_LOGIC_VECTOR (3 downto 0);
+           currentplayer : in std_logic);
 end zeroRule;
 
 architecture Behavioral of zeroRule is
 
+    signal p00temp2, p01temp2, p02temp2, p03temp2, p04temp2, p05temp2, p07temp2,
+           p08temp2, p09temp2, p10temp2, p11temp2, p12temp2 : std_logic_vector (7 downto 0);
+
 begin
+    process (currentplayer, modulo) begin
+        if currentplayer = '0' then
+            if modulo = x"0" then -- holes 0 and 12
+                if p00temp = x"01" then
+                    p06incr <= p12temp + 1;
+                    p00temp2 <= x"00";
+                    p12temp2 <= x"00";
+                elsif p00temp(0) = '0' then
+                    p06incr <= p00temp;
+                    p00temp2 <= p00temp;
+                    p12temp2 <= p12temp;
+                else
+                    p00temp2 <= p00temp;
+                    p12temp2 <= p12temp;
+                    p06incr <= x"00";
+                end if;
+                p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp;
+                p13incr <= x"00";
+
+
+            elsif modulo = x"1" then -- holes 1 and 11
+                if p01temp = x"01" then
+                    p06incr <= p11temp + 1;
+                    p01temp2 <= x"00";
+                    p11temp2 <= x"00";
+                elsif p01temp(0) = '0' then
+                    p06incr <= p01temp;
+                    p01temp2 <= p01temp;
+                    p11temp2 <= p11temp;
+                else
+                    p01temp2 <= p01temp;
+                    p11temp2 <= p11temp;
+                    p06incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
+                p13incr <= x"00";
+
+
+            elsif modulo = x"2" then -- holes 2 and 10
+            
+            elsif modulo = x"3" then -- holes 3 and 9
+
+            elsif modulo = x"4" then -- holes 4 and 8
+
+            elsif modulo = x"5" then -- holes 5 and 7
+
+            else 
+
+            end if;
+        else
+            case modulo is 
+                when x"7" =>
+                when x"8" =>
+                when x"9" =>
+                when x"A" =>
+                when x"B" =>
+                when x"C" =>
+                when others =>
+            end case;
+        end if;
+    end process;
+
 
     process begin
         case playerSelection is
-            when x"0" => p00out <= remaining; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"1" => p00out <= p00temp; p01out <= remaining; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"2" => p00out <= p00temp; p01out <= p01temp; p02out <= remaining; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"3" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= remaining; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"4" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= remaining; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"5" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= remaining; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"7" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= remaining; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"8" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= remaining; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"9" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= remaining; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp;
-            when x"A" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= remaining; p11out <= p11temp; p12out <= p12temp;
-            when x"B" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= remaining; p12out <= p12temp;
-            when x"C" => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= remaining;
-            when others => p00out <= p00temp; p01out <= p01temp; p02out <= p02temp; p03out <= p03temp; p04out <= p04temp; p05out <= p05temp; p07out <= p07temp; p08out <= p08temp; p09out <= p09temp; p10out <= p10temp; p11out <= p11temp; p12out <= p12temp; 
+            when x"0" => p00out <= remaining; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"1" => p00out <= p00temp2; p01out <= remaining; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"2" => p00out <= p00temp2; p01out <= p01temp2; p02out <= remaining; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"3" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= remaining; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"4" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= remaining; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"5" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= remaining; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"7" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= remaining; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"8" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= remaining; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"9" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= remaining; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
+            when x"A" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= remaining; p11out <= p11temp2; p12out <= p12temp2;
+            when x"B" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= remaining; p12out <= p12temp2;
+            when x"C" => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= remaining;
+            when others => p00out <= p00temp2; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2; 
         end case;
     end process;
 

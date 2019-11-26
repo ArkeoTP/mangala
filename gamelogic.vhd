@@ -37,6 +37,7 @@ entity gamelogic is
     p07, p08, p09, p10, p11, p12, p13: in std_logic_vector (7 downto 0);
     playerSelection: in std_logic_vector (3 downto 0);
     resetButton: in std_logic;
+    currentPlayer : in std_logic;
 
     p00next, p01next, p02next, p03next, p04next, p05next, p06next, p07next,
        p08next, p09next, p10next, p11next, p12next, p13next : out std_logic_vector (7 downto 0));
@@ -75,7 +76,9 @@ COMPONENT zeroRule
 		p10temp : IN std_logic_vector(7 downto 0);
 		p11temp : IN std_logic_vector(7 downto 0);
 		p12temp : IN std_logic_vector(7 downto 0);
-		playerSelection : IN std_logic_vector(3 downto 0);          
+        playerSelection : IN std_logic_vector(3 downto 0);
+        modulo : IN std_logic_vector (3 downto 0);
+        currentplayer : IN std_logic;          
 		p00out : OUT std_logic_vector(7 downto 0);
 		p01out : OUT std_logic_vector(7 downto 0);
 		p02out : OUT std_logic_vector(7 downto 0);
@@ -156,7 +159,7 @@ begin
             p12temp <= x"04";
 
             p13next <= x"00";            
-        else
+        else -- incrementation rule
     p00temp <= p00 + holeCheck(playerSelection, x"0", modulo, division);
     p01temp <= p01 + holeCheck(playerSelection, x"1", modulo, division);
     p02temp <= p02 + holeCheck(playerSelection, x"2", modulo, division);
@@ -202,7 +205,9 @@ begin
 		p10out => p10next,
 		p11out => p11next,
 		p12out => p12next,
-		playerSelection => playerSelection
+        playerSelection => playerSelection,
+        modulo => modulo,
+        currentplayer => currentplayer
 	);
 
 end Behavioral;
