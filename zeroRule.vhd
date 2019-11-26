@@ -148,6 +148,7 @@ begin
 
 
             elsif modulo = x"5" then -- holes 5 and 7
+            
                 if p05temp = x"01" then
                     p06incr <= p07temp + 1;
                     p05temp2 <= x"00";
@@ -164,6 +165,93 @@ begin
                 p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp;
                 p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
+            
+            elsif modulo = x"7" then -- capture rules 
+                if p07temp(0) = '0' then
+                    p06incr <= p07temp;
+                    p07temp2 <= x"00";
+                    p05temp2 <= p05temp;
+                else
+                    p07temp2 <= p07temp;
+                    p05temp2 <= p05temp;
+                    p06incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp;
+                p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p13incr <= x"00";
+            -- CUTOFF
+
+            elsif modulo = x"8" then
+                if p08temp(0) = '0' then
+                    p06incr <= p08temp;
+                    p08temp2 <= x"00";
+                    p04temp2 <= p04temp;
+                else
+                    p08temp2 <= p08temp;
+                    p04temp2 <= p04temp;
+                    p06incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p13incr <= x"00";
+
+            elsif modulo = x"9" then
+                if p09temp(0) = '0' then
+                    p06incr <= p08temp;
+                    p09temp2 <= x"00";
+                    p03temp2 <= p03temp;
+                else
+                    p09temp2 <= p09temp;
+                    p03temp2 <= p03temp;
+                    p06incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p13incr <= x"00";
+
+            elsif modulo = x"A" then
+                if p10temp(0) = '0' then
+                    p06incr <= p10temp;
+                    p10temp2 <= x"00";
+                    p02temp2 <= p02temp;
+                else
+                    p10temp2 <= p10temp;
+                    p02temp2 <= p02temp;
+                    p06incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p13incr <= x"00";
+            elsif modulo = x"B" then
+                if p11temp(0) = '0' then
+                    p06incr <= p11temp;
+                    p11temp2 <= x"00";
+                    p01temp2 <= p01temp;
+                else
+                    p11temp2 <= p11temp;
+                    p01temp2 <= p01temp;
+                    p06incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
+                p13incr <= x"00";
+            elsif modulo = x"C" then
+                if p12temp(0) = '0' then
+                    p06incr <= p12temp;
+                    p12temp2 <= x"00";
+                    p00temp2 <= p00temp;
+                else
+                    p12temp2 <= p12temp;
+                    p00temp2 <= p00temp;
+                    p06incr <= x"00";
+                end if;
+                p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; 
+                p13incr <= x"00";
+
+
+            -- CUTOFF
+
             else
             p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
             p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
@@ -284,7 +372,88 @@ begin
                 p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; 
                 p06incr <= x"00";
+                
 
+            elsif modulo = x"0" then -- Capture Rules
+                if p00temp(0) = '0' then
+                    p13incr <= p00temp;
+                    p00temp2 <= p00temp;
+                    p12temp2 <= p12temp;
+                else
+                    p00temp2 <= p00temp;
+                    p12temp2 <= p12temp;
+                    p13incr <= x"00";
+                end if;
+                p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp;
+                p06incr <= x"00";
+            elsif modulo = x"1" then
+                if p01temp(0) = '0' then
+                    p13incr <= p01temp;
+                    p01temp2 <= x"00";
+                    p11temp2 <= p11temp;
+                else
+                    p01temp2 <= p01temp;
+                    p11temp2 <= p11temp;
+                    p13incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
+                p06incr <= x"00";
+            elsif modulo = x"2" then
+                if p02temp(0) = '0' then
+                    p13incr <= p02temp;
+                    p02temp2 <= x"00";
+                    p10temp2 <= p10temp;
+                else
+                    p02temp2 <= p02temp;
+                    p10temp2 <= p10temp;
+                    p13incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p06incr <= x"00";
+
+            elsif modulo = x"3" then
+                if p03temp(0) = '0' then
+                    p13incr <= p02temp;
+                    p03temp2 <= x"00";
+                    p09temp2 <= p09temp;
+                else
+                    p03temp2 <= p03temp;
+                    p09temp2 <= p09temp;
+                    p13incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p06incr <= x"00";
+            elsif modulo = x"4" then
+                if p04temp(0) = '0' then
+                    p13incr <= p04temp;
+                    p04temp2 <= x"00";
+                    p08temp2 <= p08temp;
+                else
+                    p04temp2 <= p04temp;
+                    p08temp2 <= p08temp;
+                    p13incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p06incr <= x"00";
+
+            elsif modulo = x"5" then
+                if p05temp(0) = '0' then
+                    p13incr <= p05temp;
+                    p05temp2 <= x"00";
+                    p07temp2 <= p07temp;
+                else
+                    p05temp2 <= p05temp;
+                    p07temp2 <= p07temp;
+                    p13incr <= x"00";
+                end if;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp;
+                p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+                p06incr <= x"00";
 
             else
             p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
