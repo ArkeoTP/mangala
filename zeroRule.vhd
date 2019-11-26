@@ -57,10 +57,6 @@ begin
                     p06incr <= p12temp + 1;
                     p00temp2 <= x"00";
                     p12temp2 <= x"00";
-                elsif p00temp(0) = '0' then
-                    p06incr <= p00temp;
-                    p00temp2 <= p00temp;
-                    p12temp2 <= p12temp;
                 else
                     p00temp2 <= p00temp;
                     p12temp2 <= p12temp;
@@ -76,10 +72,6 @@ begin
                     p06incr <= p11temp + 1;
                     p01temp2 <= x"00";
                     p11temp2 <= x"00";
-                elsif p01temp(0) = '0' then
-                    p06incr <= p01temp;
-                    p01temp2 <= x"00";
-                    p11temp2 <= p11temp;
                 else
                     p01temp2 <= p01temp;
                     p11temp2 <= p11temp;
@@ -95,10 +87,6 @@ begin
                     p06incr <= p10temp + 1;
                     p02temp2 <= x"00";
                     p10temp2 <= x"00";
-                elsif p02temp(0) = '0' then
-                    p06incr <= p02temp;
-                    p02temp2 <= x"00";
-                    p10temp2 <= p10temp;
                 else
                     p02temp2 <= p02temp;
                     p10temp2 <= p10temp;
@@ -114,10 +102,6 @@ begin
                     p06incr <= p09temp + 1;
                     p03temp2 <= x"00";
                     p09temp2 <= x"00";
-                elsif p03temp(0) = '0' then
-                    p06incr <= p02temp;
-                    p03temp2 <= x"00";
-                    p09temp2 <= p09temp;
                 else
                     p03temp2 <= p03temp;
                     p09temp2 <= p09temp;
@@ -133,10 +117,6 @@ begin
                     p06incr <= p08temp + 1;
                     p04temp2 <= x"00";
                     p08temp2 <= x"00";
-                elsif p04temp(0) = '0' then
-                    p06incr <= p04temp;
-                    p04temp2 <= x"00";
-                    p08temp2 <= p08temp;
                 else
                     p04temp2 <= p04temp;
                     p08temp2 <= p08temp;
@@ -153,10 +133,6 @@ begin
                     p06incr <= p07temp + 1;
                     p05temp2 <= x"00";
                     p07temp2 <= x"00";
-                elsif p05temp(0) = '0' then
-                    p06incr <= p05temp;
-                    p05temp2 <= x"00";
-                    p07temp2 <= p07temp;
                 else
                     p05temp2 <= p05temp;
                     p07temp2 <= p07temp;
@@ -285,10 +261,6 @@ begin
                     p13incr <= p04temp + 1;
                     p08temp2 <= x"00";
                     p04temp2 <= x"00";
-                elsif p08temp(0) = '0' then
-                    p13incr <= p08temp;
-                    p08temp2 <= x"00";
-                    p04temp2 <= p04temp;
                 else
                     p08temp2 <= p08temp;
                     p04temp2 <= p04temp;
@@ -303,10 +275,6 @@ begin
                     p13incr <= p03temp + 1;
                     p09temp2 <= x"00";
                     p03temp2 <= x"00";
-                elsif p09temp(0) = '0' then
-                    p13incr <= p08temp;
-                    p09temp2 <= x"00";
-                    p03temp2 <= p03temp;
                 else
                     p09temp2 <= p09temp;
                     p03temp2 <= p03temp;
@@ -322,10 +290,6 @@ begin
                     p13incr <= p02temp + 1;
                     p10temp2 <= x"00";
                     p02temp2 <= x"00";
-                elsif p10temp(0) = '0' then
-                    p13incr <= p10temp;
-                    p10temp2 <= x"00";
-                    p02temp2 <= p02temp;
                 else
                     p10temp2 <= p10temp;
                     p02temp2 <= p02temp;
@@ -341,10 +305,6 @@ begin
                     p13incr <= p01temp + 1;
                     p11temp2 <= x"00";
                     p01temp2 <= x"00";
-                elsif p11temp(0) = '0' then
-                    p13incr <= p11temp;
-                    p11temp2 <= x"00";
-                    p01temp2 <= p01temp;
                 else
                     p11temp2 <= p11temp;
                     p01temp2 <= p01temp;
@@ -360,10 +320,6 @@ begin
                     p13incr <= p00temp + 1;
                     p12temp2 <= x"00";
                     p00temp2 <= x"00";
-                elsif p12temp(0) = '0' then
-                    p13incr <= p12temp;
-                    p12temp2 <= x"00";
-                    p00temp2 <= p00temp;
                 else
                     p12temp2 <= p12temp;
                     p00temp2 <= p00temp;
