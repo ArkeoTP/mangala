@@ -75,7 +75,7 @@ architecture Behavioral of DisplayModule is
 
 begin
 
-	process begin 
+	process (boardswitch) begin 
 	if boardswitch = '0' then
 		A <= p06(3 downto 0);
 		B <= x"a"; -- placeholder

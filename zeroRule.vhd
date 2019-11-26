@@ -51,6 +51,7 @@ architecture Behavioral of zeroRule is
 begin
     process (currentplayer, modulo) begin
         if currentplayer = '0' then
+
             if modulo = x"0" then -- holes 0 and 12
                 if p00temp = x"01" then
                     p06incr <= p12temp + 1;
@@ -90,7 +91,7 @@ begin
 
 
             elsif modulo = x"2" then -- holes 2 and 10
-            if p02temp = x"01" then
+                if p02temp = x"01" then
                     p06incr <= p10temp + 1;
                     p02temp2 <= x"00";
                     p10temp2 <= x"00";
@@ -103,9 +104,11 @@ begin
                     p10temp2 <= p10temp;
                     p06incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p04temp2 <= p04temp; p03temp2 <= p03temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p09temp2 <= p09temp; p08temp2 <= p08temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
+
+
             elsif modulo = x"3" then -- holes 3 and 9
                 if p03temp = x"01" then
                     p06incr <= p09temp + 1;
@@ -120,9 +123,11 @@ begin
                     p09temp2 <= p09temp;
                     p06incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p04temp2 <= p04temp; p02temp2 <= p02temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p10temp2 <= p10temp; p08temp2 <= p08temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
+
+
             elsif modulo = x"4" then -- holes 4 and 8
                 if p04temp = x"01" then
                     p06incr <= p08temp + 1;
@@ -137,9 +142,11 @@ begin
                     p08temp2 <= p08temp;
                     p06incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p09temp2 <= p09temp; p08temp2 <= p08temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
+
+
             elsif modulo = x"5" then -- holes 5 and 7
                 if p05temp = x"01" then
                     p06incr <= p07temp + 1;
@@ -154,12 +161,20 @@ begin
                     p07temp2 <= p07temp;
                     p06incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p04temp2 <= p04temp; p03temp2 <= p03temp; p11temp2 <= p11temp; p02temp2 <= p02temp;
-                p10temp2 <= p10temp; p01temp2 <= p01temp; p09temp2 <= p09temp; p08temp2 <= p08temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp;
+                p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
-            else -------
- if modulo = x"7" then -- holes 7 and 5
-                if p007temp = x"01" then
+            else
+            p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+            p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+            p06incr <= x"00";
+            p13incr <= x"00";
+            end if;
+        
+        else -- currentplayer = 1
+
+            if modulo = x"7" then -- holes 7 and 5
+                if p07temp = x"01" then
                     p13incr <= p05temp + 1;
                     p07temp2 <= x"00";
                     p05temp2 <= x"00";
@@ -172,12 +187,12 @@ begin
                     p05temp2 <= p05temp;
                     p13incr <= x"00";
                 end if;
-                p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p00temp2 <= p00temp;
-                p12temp2 <= p12temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp;
+                p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p06incr <= x"00";
 
 
-            elsif modulo = x"8" then -- holes 4 and 8
+            elsif modulo = x"8" then -- holes 8 and 4
                 if p08temp = x"01" then
                     p13incr <= p04temp + 1;
                     p08temp2 <= x"00";
@@ -191,12 +206,12 @@ begin
                     p04temp2 <= p04temp;
                     p13incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p06incr <= x"00";
 
-            elsif modulo = x"9" then -- holes 3 and 9
-            if p09temp = x"01" then
+            elsif modulo = x"9" then -- holes 9 and 3
+                if p09temp = x"01" then
                     p13incr <= p03temp + 1;
                     p09temp2 <= x"00";
                     p03temp2 <= x"00";
@@ -209,16 +224,17 @@ begin
                     p03temp2 <= p03temp;
                     p13incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p02temp2 <= p02temp; p04temp2 <= p04temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p08temp2 <= p08temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p06incr <= x"00";
 
-            elsif modulo = x"A" then -- holes 2 and 10
-if p10temp = x"01" then
+
+            elsif modulo = x"A" then -- holes 10 and 2
+                if p10temp = x"01" then
                     p13incr <= p02temp + 1;
                     p10temp2 <= x"00";
                     p02temp2 <= x"00";
-                elsif p010temp(0) = '0' then
+                elsif p10temp(0) = '0' then
                     p13incr <= p10temp;
                     p10temp2 <= x"00";
                     p02temp2 <= p02temp;
@@ -227,11 +243,13 @@ if p10temp = x"01" then
                     p02temp2 <= p02temp;
                     p13incr <= x"00";
                 end if;
-                p00temp2 <= p00temp; p04temp2 <= p04temp; p03temp2 <= p03temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p09temp2 <= p09temp; p08temp2 <= p08temp; p12temp2 <= p12temp;
+                p00temp2 <= p00temp; p01temp2 <= p01temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p06incr <= x"00";
-            elsif modulo = x"B" then -- holes 1 and 11
-if p11temp = x"01" then
+
+
+            elsif modulo = x"B" then -- holes 11 and 1
+                if p11temp = x"01" then
                     p13incr <= p01temp + 1;
                     p11temp2 <= x"00";
                     p01temp2 <= x"00";
@@ -247,8 +265,10 @@ if p11temp = x"01" then
                 p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
                 p06incr <= x"00";
-            elsif modulo = x"C" then -- holes 0 and 12
-if p12temp = x"01" then
+
+
+            elsif modulo = x"C" then -- holes 12 and 0
+                if p12temp = x"01" then
                     p13incr <= p00temp + 1;
                     p12temp2 <= x"00";
                     p00temp2 <= x"00";
@@ -261,26 +281,22 @@ if p12temp = x"01" then
                     p00temp2 <= p00temp;
                     p13incr <= x"00";
                 end if;
-                p04temp2 <= p04temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p11temp2 <= p11temp; p05temp2 <= p05temp;
-                p07temp2 <= p07temp; p01temp2 <= p01temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p08temp2 <= p108temp;
+                p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+                p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; 
                 p06incr <= x"00";
-   
+
+
+            else
+            p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
+            p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
+            p06incr <= x"00";
+            p13incr <= x"00";            
             end if;
-        else
-            case modulo is 
-                when x"7" =>
-                when x"8" =>
-                when x"9" =>
-                when x"A" =>
-                when x"B" =>
-                when x"C" =>
-                when others =>
-            end case;
         end if;
     end process;
 
 
-    process begin
+    process (playerSelection) begin
         case playerSelection is
             when x"0" => p00out <= remaining; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
             when x"1" => p00out <= p00temp2; p01out <= remaining; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
@@ -299,4 +315,3 @@ if p12temp = x"01" then
     end process;
 
 end Behavioral;
-

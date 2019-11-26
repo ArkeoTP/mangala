@@ -54,6 +54,8 @@ signal division: std_logic;
 signal p00temp, p01temp, p02temp, p03temp, p04temp, p05temp, p07temp,
 p08temp, p09temp, p10temp, p11temp, p12temp : std_logic_vector (7 downto 0);
 
+signal p06incr, p13incr : std_logic_vector (7 downto 0);
+
 COMPONENT moduloCalculator
 	PORT(
 		finalstep : IN std_logic_vector(7 downto 0);          
@@ -90,7 +92,9 @@ COMPONENT zeroRule
 		p09out : OUT std_logic_vector(7 downto 0);
 		p10out : OUT std_logic_vector(7 downto 0);
 		p11out : OUT std_logic_vector(7 downto 0);
-		p12out : OUT std_logic_vector(7 downto 0)
+        p12out : OUT std_logic_vector(7 downto 0);
+        p06incr : OUT std_logic_vector(7 downto 0);
+        p13incr : OUT std_logic_vector(7 downto 0)
 		);
 	END COMPONENT;
 
@@ -113,7 +117,7 @@ return '0';
 end holeCheck;
 
 begin
-    process begin
+    process (playerSelection) begin
     case playerSelection is -- stones on hand
         when x"0" => currentvalue <= p00;
         when x"1" => currentvalue <= p01;
@@ -139,9 +143,11 @@ begin
 		finalstep => finalstep,
 		modulo => modulo,
 		division => division
-	);
-    process begin
+    );
+    
+    process (resetButton) begin
         if resetButton = '1' then -- fix later
+
             p00temp <= x"04";
             p01temp <= x"04";
             p02temp <= x"04";
@@ -160,27 +166,27 @@ begin
 
             p13next <= x"00";            
         else -- incrementation rule
-    p00temp <= p00 + holeCheck(playerSelection, x"0", modulo, division);
-    p01temp <= p01 + holeCheck(playerSelection, x"1", modulo, division);
-    p02temp <= p02 + holeCheck(playerSelection, x"2", modulo, division);
-    p03temp <= p03 + holeCheck(playerSelection, x"3", modulo, division);
-    p04temp <= p04 + holeCheck(playerSelection, x"4", modulo, division);
-    p05temp <= p05 + holeCheck(playerSelection, x"5", modulo, division);
+            p00temp <= p00 + holeCheck(playerSelection, x"0", modulo, division);
+            p01temp <= p01 + holeCheck(playerSelection, x"1", modulo, division);
+            p02temp <= p02 + holeCheck(playerSelection, x"2", modulo, division);
+            p03temp <= p03 + holeCheck(playerSelection, x"3", modulo, division);
+            p04temp <= p04 + holeCheck(playerSelection, x"4", modulo, division);
+            p05temp <= p05 + holeCheck(playerSelection, x"5", modulo, division);
 
-    p06next <= p06 + holeCheck(playerSelection, x"6", modulo, division);
+            p06next <= p06 + holeCheck(playerSelection, x"6", modulo, division) + p06incr;
 
-    p07temp <= p07 + holeCheck(playerSelection, x"7", modulo, division);
-    p08temp <= p08 + holeCheck(playerSelection, x"8", modulo, division);
-    p09temp <= p09 + holeCheck(playerSelection, x"9", modulo, division);
-    p10temp <= p10 + holeCheck(playerSelection, x"A", modulo, division);
-    p11temp <= p11 + holeCheck(playerSelection, x"B", modulo, division);
-    p12temp <= p12 + holeCheck(playerSelection, x"C", modulo, division);
+            p07temp <= p07 + holeCheck(playerSelection, x"7", modulo, division);
+            p08temp <= p08 + holeCheck(playerSelection, x"8", modulo, division);
+            p09temp <= p09 + holeCheck(playerSelection, x"9", modulo, division);
+            p10temp <= p10 + holeCheck(playerSelection, x"A", modulo, division);
+            p11temp <= p11 + holeCheck(playerSelection, x"B", modulo, division);
+            p12temp <= p12 + holeCheck(playerSelection, x"C", modulo, division);
     
-    p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division);
+            p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division) + p13incr;
         end if;
     end process;
 
-    Inst_zeroRule: zeroRule PORT MAP(
+    ZeroingRules: zeroRule PORT MAP(
 		p00temp => p00temp,
 		p01temp => p01temp,
 		p02temp => p02temp,
@@ -207,7 +213,9 @@ begin
 		p12out => p12next,
         playerSelection => playerSelection,
         modulo => modulo,
-        currentplayer => currentplayer
+        currentplayer => currentplayer,
+        p06incr => p06incr,
+        p13incr => p13incr
 	);
 
 end Behavioral;

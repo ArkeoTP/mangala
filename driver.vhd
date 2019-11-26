@@ -49,7 +49,7 @@ end driver;
 architecture Behavioral of driver is
 signal counter: std_logic_vector(2 downto 0):="000";
 begin
-mainprocess: process
+mainprocess: process (clk)
 begin
 	if (clk'event and clk='1' ) then 
 		counter <= counter + 1;

@@ -43,7 +43,7 @@ signal divhold: std_logic;
 
 begin
 
-    process begin
+    process (finalstep) begin
         case finalstep is -- divide by 14 if 16 and above
             when x"00" => divhold <= '0';
             when x"01" => divhold <= '0';
@@ -65,7 +65,7 @@ begin
         end case;
     end process;
 
-    process begin
+    process (divhold) begin
         if (divhold = '1') then
             substractor <= finalstep - x"0E";
         else

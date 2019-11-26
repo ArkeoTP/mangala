@@ -114,7 +114,7 @@ COMPONENT DisplayModule
 signal p00, p01, p02, p03, p04, p05, 
     p07, p08, p09, p10, p11, p12: std_logic_vector (7 downto 0);
 signal p06, p13 : std_logic_vector (7 downto 0);
-signal currentplayer : std_logic := '0';
+signal currentplayer : std_logic := '1';
 
 signal p00next, p01next, p02next, p03next, p04next, p05next, p07next,
        p08next, p09next, p10next, p11next, p12next : std_logic_vector (7 downto 0);
@@ -242,7 +242,7 @@ begin
     p13 <= p13temp;
 	p13out <= p13temp;
 
-Inst_gamelogic: gamelogic PORT MAP(
+Combinational_Parts: gamelogic PORT MAP(
 		p00 => p00,
 		p01 => p01,
 		p02 => p02,
@@ -275,7 +275,8 @@ Inst_gamelogic: gamelogic PORT MAP(
 		resetButton => resetButton,
 		currentplayer => currentplayer
     );
-    
+	
+	
 Update: Process(turnClock)
 begin
     if (rising_edge(turnClock)) then 
@@ -283,7 +284,7 @@ begin
     end if;
 end process;
 
-Inst_DisplayModule: DisplayModule PORT MAP(
+Display_Board_State: DisplayModule PORT MAP(
 		p00 => p00out,
 		p01 => p01out,
 		p02 => p02out,
