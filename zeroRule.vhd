@@ -142,7 +142,7 @@ begin
                 p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
             
-            elsif modulo = x"7" then -- capture rules 
+            elsif modulo = x"7" then -- capture rules 7
                 if p07temp(0) = '0' then
                     p06incr <= p07temp;
                     p07temp2 <= x"00";
@@ -157,7 +157,7 @@ begin
                 p13incr <= x"00";
             -- CUTOFF
 
-            elsif modulo = x"8" then
+            elsif modulo = x"8" then -- 8/4
                 if p08temp(0) = '0' then
                     p06incr <= p08temp;
                     p08temp2 <= x"00";
@@ -171,9 +171,9 @@ begin
                 p07temp2 <= p07temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
 
-            elsif modulo = x"9" then
+            elsif modulo = x"9" then -- 9/3
                 if p09temp(0) = '0' then
-                    p06incr <= p08temp;
+                    p06incr <= p09temp;
                     p09temp2 <= x"00";
                     p03temp2 <= p03temp;
                 else
@@ -185,7 +185,7 @@ begin
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p10temp2 <= p10temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
 
-            elsif modulo = x"A" then
+            elsif modulo = x"A" then --10/2
                 if p10temp(0) = '0' then
                     p06incr <= p10temp;
                     p10temp2 <= x"00";
@@ -198,7 +198,8 @@ begin
                 p00temp2 <= p00temp; p01temp2 <= p01temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p11temp2 <= p11temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
-            elsif modulo = x"B" then
+
+            elsif modulo = x"B" then -- 11/1
                 if p11temp(0) = '0' then
                     p06incr <= p11temp;
                     p11temp2 <= x"00";
@@ -211,7 +212,8 @@ begin
                 p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
                 p13incr <= x"00";
-            elsif modulo = x"C" then
+
+            elsif modulo = x"C" then -- 12/0
                 if p12temp(0) = '0' then
                     p06incr <= p12temp;
                     p12temp2 <= x"00";
@@ -225,8 +227,6 @@ begin
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp; 
                 p13incr <= x"00";
 
-
-            -- CUTOFF
 
             else
             p00temp2 <= p00temp; p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
@@ -242,10 +242,6 @@ begin
                     p13incr <= p05temp + 1;
                     p07temp2 <= x"00";
                     p05temp2 <= x"00";
-                elsif p07temp(0) = '0' then
-                    p13incr <= p07temp;
-                    p07temp2 <= x"00";
-                    p05temp2 <= p05temp;
                 else
                     p07temp2 <= p07temp;
                     p05temp2 <= p05temp;
@@ -333,7 +329,7 @@ begin
             elsif modulo = x"0" then -- Capture Rules
                 if p00temp(0) = '0' then
                     p13incr <= p00temp;
-                    p00temp2 <= p00temp;
+                    p00temp2 <= x"00";
                     p12temp2 <= p12temp;
                 else
                     p00temp2 <= p00temp;
@@ -343,6 +339,7 @@ begin
                 p01temp2 <= p01temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p11temp2 <= p11temp;
                 p06incr <= x"00";
+
             elsif modulo = x"1" then
                 if p01temp(0) = '0' then
                     p13incr <= p01temp;
@@ -356,6 +353,7 @@ begin
                 p00temp2 <= p00temp; p02temp2 <= p02temp; p03temp2 <= p03temp; p04temp2 <= p04temp; p05temp2 <= p05temp;
                 p07temp2 <= p07temp; p08temp2 <= p08temp; p09temp2 <= p09temp; p10temp2 <= p10temp; p12temp2 <= p12temp;
                 p06incr <= x"00";
+
             elsif modulo = x"2" then
                 if p02temp(0) = '0' then
                     p13incr <= p02temp;
@@ -372,7 +370,7 @@ begin
 
             elsif modulo = x"3" then
                 if p03temp(0) = '0' then
-                    p13incr <= p02temp;
+                    p13incr <= p03temp;
                     p03temp2 <= x"00";
                     p09temp2 <= p09temp;
                 else
