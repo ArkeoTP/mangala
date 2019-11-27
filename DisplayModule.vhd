@@ -22,7 +22,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
+use ieee.std_logic_unsigned.all; -- addition for BCD
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -57,43 +58,83 @@ architecture Behavioral of DisplayModule is
 
     COMPONENT sevenSegment
 	PORT(
-		A : IN std_logic_vector(3 downto 0);
-		B : IN std_logic_vector(3 downto 0);
-		C : IN std_logic_vector(3 downto 0);
-		D : IN std_logic_vector(3 downto 0);
-		E : IN std_logic_vector(3 downto 0);
-		F : IN std_logic_vector(3 downto 0);
-		G : IN std_logic_vector(3 downto 0);
-		H : IN std_logic_vector(3 downto 0);
+		A : IN std_logic_vector(7 downto 0);
+		B : IN std_logic_vector(7 downto 0);
+		C : IN std_logic_vector(7 downto 0);
+		D : IN std_logic_vector(7 downto 0);
+		E : IN std_logic_vector(7 downto 0);
+		F : IN std_logic_vector(7 downto 0);
+		G : IN std_logic_vector(7 downto 0);
+		H : IN std_logic_vector(7 downto 0);
 		clk : IN std_logic;          
 		SevenSegControl : OUT std_logic_vector(7 downto 0);
 		SevenSegBus : OUT std_logic_vector(7 downto 0)
 		);
 	END COMPONENT;
 
-	signal A, B, C, D, E, F, G, H: std_logic_vector (3 downto 0) := x"0";
+	signal A, B, C, D, E, F, G, H: std_logic_vector (7 downto 0) := x"FF";
+
+	signal p06left, p06right, p13left, p13right, p06hold, p13hold : std_logic_vector (7 downto 0);
 
 begin
 
-	process (boardswitch) begin 
+	p06hold <= p06 + x"10";
+	p13hold <= p13 + x"10";
+	
+	p06left (7 downto 4) <= p06hold (7 downto 4);
+	p06left (3 downto 0) <= "0000";
+	p13left (7 downto 4) <= p13hold (7 downto 4);
+	p13left (3 downto 0) <= "0000";
+
+	p06right(3 downto 0) <= p06 (3 downto 0);
+	p06right(7 downto 4) <= "0000";
+
+	p13right(3 downto 0) <= p13 (3 downto 0);
+	p13right(7 downto 4) <= "0000";
+
+	process (boardswitch, p13, p06) begin 
+
+	if (p13 > x"18") then
+		H <= x"41"; -- P1 LOSE
+		G <= x"01";
+		F <= x"FF";
+		E <= x"42";
+		D <= x"00";
+		C <= x"43";
+		B <= x"0E";
+		A <= x"FF";
+	elsif (p06 > x"18") then
+		H <= x"41"; -- P2 LOSE
+		G <= x"02";
+		F <= x"FF";
+		E <= x"42";
+		D <= x"00";
+		C <= x"43";
+		B <= x"0E";
+		A <= x"FF";
+	else
+
 	if boardswitch = '0' then
-		A <= p06(3 downto 0);
-		B <= x"a"; -- placeholder
-		C <= p05(3 downto 0);
-		D <= p04(3 downto 0);
-		E <= p03(3 downto 0);
-		F <= p02(3 downto 0);
-		G <= p01(3 downto 0);
-		H <= p00(3 downto 0);
+		A <= p06right(7 downto 0);
+		B <= p06left(7 downto 0);
+
+		C <= p05(7 downto 0);
+		D <= p04(7 downto 0);
+		E <= p03(7 downto 0);
+		F <= p02(7 downto 0);
+		G <= p01(7 downto 0);
+		H <= p00(7 downto 0);
 	else 
-		A <= p07(3 downto 0);
-		B <= p08(3 downto 0);
-		C <= p09(3 downto 0);
-		D <= p10(3 downto 0);
-		E <= p11(3 downto 0);
-		F <= p12(3 downto 0);
-		G <= x"a"; -- placeholder
-		H <= p13(3 downto 0);
+		A <= p07(7 downto 0);
+		B <= p08(7 downto 0);
+		C <= p09(7 downto 0);
+		D <= p10(7 downto 0);
+		E <= p11(7 downto 0);
+		F <= p12(7 downto 0);
+
+		H <= p13right(7 downto 0);
+		G <= p13left(7 downto 0);
+	end if;
 	end if;
 	end process;
 

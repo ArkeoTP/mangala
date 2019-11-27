@@ -32,14 +32,14 @@ use ieee.std_logic_unsigned.all;
 --use UNISIM.VComponents.all;
 
 entity sevenSegment is
-port( A: in std_logic_vector(3 downto 0);
-		B: in std_logic_vector(3 downto 0);
-		C: in std_logic_vector(3 downto 0);
-		D: in std_logic_vector(3 downto 0);
-		E: in std_logic_vector(3 downto 0);
-		F: in std_logic_vector(3 downto 0);
-		G: in std_logic_vector(3 downto 0);
-		H: in std_logic_vector(3 downto 0);
+port( A: in std_logic_vector(7 downto 0);
+		B: in std_logic_vector(7 downto 0);
+		C: in std_logic_vector(7 downto 0);
+		D: in std_logic_vector(7 downto 0);
+		E: in std_logic_vector(7 downto 0);
+		F: in std_logic_vector(7 downto 0);
+		G: in std_logic_vector(7 downto 0);
+		H: in std_logic_vector(7 downto 0);
 		clk:in std_logic; 
 		SevenSegControl: out std_logic_vector (7 downto 0):=x"ff";
 		SevenSegBus: out std_logic_vector (7 downto 0));
@@ -47,7 +47,7 @@ end sevenSegment;
 
 architecture Behavioral of sevenSegment is
 signal clkTrigger: std_logic;
-signal sevenSegValue: std_logic_vector(3 downto 0);
+signal sevenSegValue: std_logic_vector(7 downto 0);
 
 begin
 SlowClock: entity work.slowerClock port map(

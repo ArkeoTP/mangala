@@ -55,6 +55,7 @@ signal p00temp, p01temp, p02temp, p03temp, p04temp, p05temp, p07temp,
 p08temp, p09temp, p10temp, p11temp, p12temp : std_logic_vector (7 downto 0);
 
 signal p06incr, p13incr : std_logic_vector (7 downto 0);
+signal allzero06, allzero13 : std_logic_vector (7 downto  0) := x"00";
 
 COMPONENT moduloCalculator
 	PORT(
@@ -144,9 +145,22 @@ begin
 		modulo => modulo,
 		division => division
     );
+
+    process (p00, p01, p02, p03, p04, p05, p07, p08, p09, p10, p11, p12) begin -- if someone gets all zero rows, he collects all the remaining stones
+        if (p00 = x"00") and (p01 = x"00") and (p02 = x"00") and (p03 = x"00") and (p04 = x"00") and (p05 = x"00") then
+            allzero06 <= p07 + p08 + p09 + p10 + p11 + p12;
+            allzero13 <= x"00";
+        elsif (p07 = x"00") and (p08 = x"00") and (p09 = x"00") and (p10 = x"00") and (p11 = x"00") and (p12 = x"00") then
+            allzero13 <= p00 + p01 + p02 + p03 + p04 + p05;
+            allzero06 <= x"00";
+        else
+            allzero06 <= x"00";
+            allzero13 <= x"00";
+        end if;
+    end process;
     
     process (resetButton) begin
-        if resetButton = '1' then -- fix later
+        if resetButton = '1' then -- don't fix
 
             p00temp <= x"04";
             p01temp <= x"04";
@@ -173,7 +187,7 @@ begin
             p04temp <= p04 + holeCheck(playerSelection, x"4", modulo, division);
             p05temp <= p05 + holeCheck(playerSelection, x"5", modulo, division);
 
-            p06next <= p06 + holeCheck(playerSelection, x"6", modulo, division) + p06incr;
+            p06next <= p06 + holeCheck(playerSelection, x"6", modulo, division) + p06incr + allzero06;
 
             p07temp <= p07 + holeCheck(playerSelection, x"7", modulo, division);
             p08temp <= p08 + holeCheck(playerSelection, x"8", modulo, division);
@@ -182,7 +196,7 @@ begin
             p11temp <= p11 + holeCheck(playerSelection, x"B", modulo, division);
             p12temp <= p12 + holeCheck(playerSelection, x"C", modulo, division);
     
-            p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division) + p13incr;
+            p13next <= p13 + holeCheck(playerSelection, x"D", modulo, division) + p13incr + allzero13;
         end if;
     end process;
 

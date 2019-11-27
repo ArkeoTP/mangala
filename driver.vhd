@@ -34,16 +34,16 @@ use ieee.std_logic_arith.all;
 
 entity driver is
 port(clk: in std_logic; 
-		A: in std_logic_vector(3 downto 0);
-		B: in std_logic_vector(3 downto 0);
-		C: in std_logic_vector(3 downto 0);
-		D: in std_logic_vector (3 downto 0);
-		E: in std_logic_vector (3 downto 0);
-		F: in std_logic_vector (3 downto 0);
-		G: in std_logic_vector (3 downto 0);
-		H: in std_logic_vector (3 downto 0);
+		A: in std_logic_vector(7 downto 0);
+		B: in std_logic_vector(7 downto 0);
+		C: in std_logic_vector(7 downto 0);
+		D: in std_logic_vector (7 downto 0);
+		E: in std_logic_vector (7 downto 0);
+		F: in std_logic_vector (7 downto 0);
+		G: in std_logic_vector (7 downto 0);
+		H: in std_logic_vector (7 downto 0);
 		sevenSegNumber: out std_logic_vector(7 downto 0); 
-		sevenSegValue: out std_logic_vector(3 downto 0));
+		sevenSegValue: out std_logic_vector(7 downto 0));
 end driver;
 
 architecture Behavioral of driver is
@@ -76,6 +76,6 @@ with counter select sevenSegValue <=
 					F when "010",
 					G when "001",
 					H when "000",
-					"1101" when others;
+					"00001101" when others;
 end Behavioral;
 
