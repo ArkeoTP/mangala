@@ -33,11 +33,12 @@ entity main is
     Port ( 
         turnClock: in std_logic;
         resetButton: in std_logic;
-        playerSelection: in std_logic_vector (3 downto 0);
+        positionSelect: in std_logic_vector (5 downto 0);
 		boardSwitch: in std_logic;
 		SevSegBus: out std_logic_vector (7 downto 0);
 		SevSegControl: out std_logic_vector (7 downto 0);
-		mclk: in std_logic -- master clock
+		mclk: in std_logic; -- master clock
+		currentlyPlaying: out std_logic
 		
     );
 end main;
@@ -111,10 +112,19 @@ COMPONENT DisplayModule
 		);
 	END COMPONENT;
 
+	COMPONENT playerInput
+	PORT(
+		positionSelect : IN std_logic_vector(5 downto 0);
+		currentPlayer : IN std_logic;          
+		positionOut : OUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+
 signal p00, p01, p02, p03, p04, p05, 
     p07, p08, p09, p10, p11, p12: std_logic_vector (7 downto 0);
 signal p06, p13 : std_logic_vector (7 downto 0);
 signal currentplayer : std_logic := '1';
+signal playerSelection : std_logic_vector (3 downto 0) := x"6";
 
 signal p00next, p01next, p02next, p03next, p04next, p05next, p07next,
        p08next, p09next, p10next, p11next, p12next : std_logic_vector (7 downto 0);
@@ -125,6 +135,7 @@ signal p00temp, p01temp, p02temp, p03temp, p04temp, p05temp, p06temp,
 
 signal p00out, p01out, p02out, p03out, p04out, p05out, p06out, -- send to display
 	   p07out, p08out, p09out, p10out, p11out, p12out, p13out: std_logic_vector (7 downto 0);
+
 
 begin
 
@@ -242,6 +253,12 @@ begin
     p13 <= p13temp;
 	p13out <= p13temp;
 
+Inst_playerInput: playerInput PORT MAP(
+		positionSelect => positionSelect,
+		currentPlayer => currentPlayer,
+		positionOut => playerSelection
+);
+
 Combinational_Parts: gamelogic PORT MAP(
 		p00 => p00,
 		p01 => p01,
@@ -276,13 +293,17 @@ Combinational_Parts: gamelogic PORT MAP(
 		currentplayer => currentplayer
     );
 	
-	
-Update: Process(turnClock)
+Update: Process(resetButton)
 begin
     if (rising_edge(turnClock)) then 
         currentplayer <= (not currentplayer);
-    end if;
+	end if;
+	if resetButton = '1' then
+		currentplayer <= '0';
+	end if;
 end process;
+
+currentlyPlaying <= currentplayer; -- display current player
 
 Display_Board_State: DisplayModule PORT MAP(
 		p00 => p00out,
@@ -304,6 +325,7 @@ Display_Board_State: DisplayModule PORT MAP(
 		SevSegControl => SevSegControl,
 		clk => mclk
 	);
+
 
 end Behavioral;
 

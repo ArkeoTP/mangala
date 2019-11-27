@@ -18,14 +18,18 @@ NET "SevSegBus[0]" LOC = P70;
 
 NET "mclk" LOC = P40;
 
-NET "playerSelection[0]" LOC = P15;
-NET "playerSelection[1]" LOC = P12;
-NET "playerSelection[2]" LOC = P5;
-NET "playerSelection[3]" LOC = P4;
+NET "positionSelect[0]" LOC = P15;
+NET "positionSelect[1]" LOC = P12;
+NET "positionSelect[2]" LOC = P5;
+NET "positionSelect[3]" LOC = P4;
+NET "positionSelect[4]" LOC = P94;
+NET "positionSelect[5]" LOC = P90;
 
 NET "resetButton" LOC = P34;
 NET "turnClock" LOC = P35;
 NET "boardSwitch" LOC = P78;
+
+NET "currentlyPlaying" LOC = P16;
 
 NET "turnClock" CLOCK_DEDICATED_ROUTE = FALSE;
 NET "resetButton" CLOCK_DEDICATED_ROUTE = FALSE;

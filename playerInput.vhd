@@ -38,8 +38,29 @@ end playerInput;
 architecture Behavioral of playerInput is
 
 begin
-
-    -- TODO
+    process begin
+        if currentPlayer = '0' then
+            case positionSelect is
+                when "100000" => positionOut <= x"0";
+                when "010000" => positionOut <= x"1";
+                when "001000" => positionOut <= x"2";
+                when "000100" => positionOut <= x"3";
+                when "000010" => positionOut <= x"4";
+                when "000001" => positionOut <= x"5";
+                when others => positionOut <= x"6";
+            end case;
+        else
+            case positionSelect is
+                when "100000" => positionOut <= x"C";
+                when "010000" => positionOut <= x"B";
+                when "001000" => positionOut <= x"A";
+                when "000100" => positionOut <= x"9";
+                when "000010" => positionOut <= x"8";
+                when "000001" => positionOut <= x"7";
+                when others => positionOut <= x"6";
+            end case;
+        end if;
+    end process;
 
 end Behavioral;
 
