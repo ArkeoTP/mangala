@@ -82,17 +82,20 @@ begin
 	p13hold <= p13 + x"10";
 	
 	p06left (7 downto 4) <= p06hold (7 downto 4);
-	p06left (3 downto 0) <= "0000";
+	--p06left (3 downto 0) <= "0000";
 	p13left (7 downto 4) <= p13hold (7 downto 4);
-	p13left (3 downto 0) <= "0000";
+	--p13left (3 downto 0) <= "0000";
 
 	p06right(3 downto 0) <= p06 (3 downto 0);
-	p06right(7 downto 4) <= "0000";
+	--p06right(7 downto 4) <= "0000";
 
 	p13right(3 downto 0) <= p13 (3 downto 0);
-	p13right(7 downto 4) <= "0000";
+	--p13right(7 downto 4) <= "0000";
 
-	process (boardswitch, p13, p06) begin 
+	process (boardswitch, p13, p06,
+			 p06right, p06left, p13right, p13left,
+			 p00, p01, p02, p03, p04, p05,
+			 p07, p08, p09, p10, p11, p12) begin 
 
 	if (p13 > x"18") then
 		H <= x"41"; -- P1 LOSE

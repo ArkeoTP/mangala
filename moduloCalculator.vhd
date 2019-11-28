@@ -65,7 +65,7 @@ begin
         end case;
     end process;
 
-    process (divhold) begin
+    process (divhold, finalstep) begin
         if (divhold = '1') then
             substractor <= finalstep - x"0E";
         else

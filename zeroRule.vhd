@@ -49,7 +49,9 @@ architecture Behavioral of zeroRule is
            p08temp2, p09temp2, p10temp2, p11temp2, p12temp2 : std_logic_vector (7 downto 0);
 
 begin
-    process (currentplayer, modulo) begin
+    process (currentplayer, modulo,
+             p00temp, p01temp, p02temp, p03temp, p04temp, p05temp,
+             p07temp, p08temp, p09temp, p10temp, p11temp, p12temp) begin
         if currentplayer = '0' then
 
             if modulo = x"0" then -- holes 0 and 12
@@ -419,7 +421,9 @@ begin
     end process;
 
 
-    process (playerSelection) begin
+    process (playerSelection,
+             p00temp2, p01temp2, p02temp2, p03temp2, p04temp2, p05temp2,
+             p07temp2, p08temp2, p09temp2, p10temp2, p11temp2, p12temp2) begin
         case playerSelection is
             when x"0" => p00out <= remaining; p01out <= p01temp2; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;
             when x"1" => p00out <= p00temp2; p01out <= remaining; p02out <= p02temp2; p03out <= p03temp2; p04out <= p04temp2; p05out <= p05temp2; p07out <= p07temp2; p08out <= p08temp2; p09out <= p09temp2; p10out <= p10temp2; p11out <= p11temp2; p12out <= p12temp2;

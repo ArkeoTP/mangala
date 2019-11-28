@@ -38,7 +38,7 @@ end playerInput;
 architecture Behavioral of playerInput is
 
 begin
-    process begin
+    process (currentPlayer, positionSelect) begin
         if currentPlayer = '0' then
             case positionSelect is
                 when "100000" => positionOut <= x"0";

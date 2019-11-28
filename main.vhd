@@ -293,7 +293,7 @@ Combinational_Parts: gamelogic PORT MAP(
 		currentplayer => currentplayer
     );
 	
-Update: Process(resetButton)
+Update: Process(resetButton, turnClock)
 begin
     if (rising_edge(turnClock)) then 
         currentplayer <= (not currentplayer);

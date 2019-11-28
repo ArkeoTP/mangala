@@ -118,7 +118,7 @@ return '0';
 end holeCheck;
 
 begin
-    process (playerSelection) begin
+    process (playerSelection, p00, p01, p02, p03, p04, p05, p07, p08, p09, p10, p11, p12) begin
     case playerSelection is -- stones on hand
         when x"0" => currentvalue <= p00;
         when x"1" => currentvalue <= p01;
@@ -159,7 +159,10 @@ begin
         end if;
     end process;
     
-    process (resetButton) begin
+    process (resetButton, modulo, division, playerSelection, 
+             p00, p01, p02, p03, p04, p05, p06, 
+             p07, p08, p09, p10, p11, p12, p13, 
+             p06incr, p13incr, allzero06, allzero13) begin
         if resetButton = '1' then -- don't fix
 
             p00temp <= x"04";
